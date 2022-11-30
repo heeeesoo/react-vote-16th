@@ -7,6 +7,7 @@ export default function Register(){
     const password = useInput('');
     const useremail = useInput('');
     const [usertype, setUserType] = useState(''); //useInput으로 바꾸기
+    const [teamtype, setTeamType] = useState(''); //useInput으로 바꾸기
 
     const [pwdCheck, setPwdCheck] = useState('')
     const [pwdError, setPwdError] = useState(false);
@@ -18,14 +19,16 @@ export default function Register(){
     }
 
     const selectList = ["Frontend","Backend"];
+    const teamList = ["Teample", "Forget Me Not", "Pre:folio", "diaMEtes", "recipeasy"]
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(`
-        username:${username.value}, 
-        password:${password.value}, 
-        useremail:${useremail.value}, 
-        usertype:${usertype}`);
+        username:${username.value}
+        password:${password.value}
+        useremail:${useremail.value}
+        usertype:${usertype}
+        teamtype:${teamtype}`);
 
         if(!pwdError){
             console.log('제출');
@@ -36,8 +39,12 @@ export default function Register(){
         // 회원가입 post 부분
     }
 
-    const handleRadioChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         setUserType(e.target.value);
+    }
+
+    const handleTeamChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setTeamType(e.target.value);
     }
 
 
@@ -55,9 +62,22 @@ export default function Register(){
                         <div key={value}>
                             <input
                                 type="radio"
-                                onChange={handleRadioChange}
+                                onChange={handleSelectChange}
                                 value={value}
                                 checked={usertype === value}
+                            />
+                            {value}
+                        </div>
+                    ))
+                }
+                {
+                    teamList.map((value)=>(
+                        <div key={value}>
+                            <input
+                                type="radio"
+                                onChange={handleTeamChange}
+                                value={value}
+                                checked={teamtype === value}
                             />
                             {value}
                         </div>
