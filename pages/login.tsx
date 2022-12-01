@@ -1,19 +1,43 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import useInput from "../src/hooks/useInput";
+import axios from "axios";
 
 export default function Login() {
 
   const userid = useInput('');
   const password = useInput('');
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(`
     userid : ${userid.value}
     password: ${password.value}
     `)
+
+    const data = {
+      userid:userid.value,
+      password:password.value
+    }
+
     //login post 
+
+    // const response =  await (await fetch('/api/test/login',{
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8'
+    //   },
+    //   body: JSON.stringify(data)
+    // })).json();
+
+    const response = await axios.post('/api/test/login', data)
+
+    const accessToken = response.data.token;
+
+    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+    // accessToken을 localStorage, cookie 등에 저장하지 않는다 (XSS 취약점 보완)
   }
 
   return (
