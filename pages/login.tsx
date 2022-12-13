@@ -36,10 +36,18 @@ export default function Login() {
 
     // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    console.log(accessToken);
 
     // accessToken을 localStorage, cookie 등에 저장하지 않는다 (XSS 취약점 보완)
   }
 
+  const REST_API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+
+  const handleClick = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  }
   return (
     <div>
       CEOS 운영진 선출 투표 <br/>
@@ -48,6 +56,11 @@ export default function Login() {
         <input type="password" {...password} placeholder="비밀번호"/><br/>
         <button type="submit">로그인</button>
       </form>
+      <br/>
+      <button onClick={handleClick}>
+        카카오 로그인
+      </button>
+      <br/>
       <Link
       href="/register">
           회원가입
