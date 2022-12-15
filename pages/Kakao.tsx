@@ -1,6 +1,14 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+interface TokenResponse {
+    token_type: string;
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    refresh_token_expires_in: string;
+}
+
 export default function Kakao(){
     const router = useRouter();
     const { code: authCode, error: kakaoServerError } = router.query;
@@ -40,11 +48,27 @@ export default function Kakao(){
         return response;
     }
 
+    async function getUserFromKakao(access_token :any) {
+        const userInfoUrl = 'https://kapi.kakao.com/v2/user/me';
+        const response = await fetch(userInfoUrl, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${access_token}`,
+          },
+        }).then((res) => res.json());
+
+        console.log(response);
+
+        return response;
+      }
+
     useEffect(()=>{
         if (authCode) {
             console.log('here:',authCode)
-            getTokenFromKakao(authCode)
-            // 인가코드를 제대로 못 받았을 경우에 에러 페이지를 띄운다.
+            const tokenResponse : any= getTokenFromKakao(authCode);
+
+            const userInfo =  getUserFromKakao(tokenResponse.access_token);
+
           } else if (kakaoServerError) { 
             // router.push('/notifications/authentication-failed');
             console.log(kakaoServerError)
