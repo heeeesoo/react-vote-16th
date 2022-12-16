@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   const names = ['FE', 'BE', 'DEMO'];
-  
+
   return (
     <div>
       {
