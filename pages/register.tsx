@@ -7,7 +7,7 @@ export default function Register(){
     const username = useInput('');
     const password = useInput('');
     const useremail = useInput('');
-    const [usertype, setUserType] = useState(''); //useInput으로 바꾸기
+    const [userDepartment, setDepartmentType] = useState(''); //useInput으로 바꾸기
     const [teamtype, setTeamType] = useState(''); //useInput으로 바꾸기
 
     const [pwdCheck, setPwdCheck] = useState('')
@@ -29,7 +29,7 @@ export default function Register(){
         username:${username.value}
         password:${password.value}
         useremail:${useremail.value}
-        usertype:${usertype}
+        userDepartment:${userDepartment}
         teamtype:${teamtype}`);
 
         if(!pwdError){
@@ -42,7 +42,7 @@ export default function Register(){
     }
 
     const handleSelectChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        setUserType(e.target.value);
+        setDepartmentType(e.target.value);
     }
 
     const handleTeamChange = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export default function Register(){
                                 type="radio"
                                 onChange={handleSelectChange}
                                 value={value}
-                                checked={usertype === value}
+                                checked={userDepartment === value}
                             />
                             {value}
                         </div>
