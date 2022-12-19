@@ -25,29 +25,37 @@ export default function Layout({children} : LayoutProps){
 
     return (
         <>
-            <Link
-            href="/">
-                CEOS 16기 투표
-            </Link>
-            |
-            {
-                user.isLogged ?
-                <button onClick={handleClick}>
-                    로그아웃
-                </button>
-                :
-                    router.pathname === "/" && 
+            <div className="header">
                 <Link
-                href="/login">
-                    로그인
+                href="/">
+                    CEOS 16기 투표
                 </Link>
-            }
-            |
-            이메일 : {user.useremail}
-            <hr/>
+                이메일 : {user.useremail}
+                {
+                    user.isLogged ?
+                    <button onClick={handleClick}>
+                        로그아웃
+                    </button>
+                    :
+                        router.pathname === "/" && 
+                    <Link
+                    href="/login">
+                        로그인
+                    </Link>
+                }
+            </div>
             <div className="container">
                 {children}
             </div>
+            <style jsx>{`
+                .header {
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    background : #CCD6A6;
+                    height: 40px;
+                }
+            `}</style>
         </>
     )
 }
