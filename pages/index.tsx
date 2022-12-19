@@ -50,5 +50,6 @@ export default function Home() {
         dispatch(down(2))
       }}> - </button>
     </div>
+    
   )
 }
