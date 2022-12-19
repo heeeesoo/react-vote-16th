@@ -6,32 +6,41 @@ export default function Part(){
     const router = useRouter();
     const {Part} = router.query;
 
-    const [vote, setVote] = useState({});
+    const [vote, setVote] = useState(0);
 
     // fe, be, demo 리스트 -> fetch로 바꾸기
     const dataList = [
         {
+            "id" : 0,
             "name" : "후보1",
-            "department" : "팀",
+            "department_id" : 0,
+            "department" : "프론트엔드",
             "score" : 1 
         },
         {
+            "id" : 1,
             "name" : "후보2",
-            "department" : "팀",
+            "department_id" : 1,
+            "department" : "백엔드",
             "score" : 2
         },
         {
+            "id" : 2,
             "name" : "후보3",
-            "department" : "팀",
+            "department_id" : 0,
+            "department" : "프론트엔드",
             "score" : 3
         }
     ]
 
     const handleClick = () => {
-        console.log(vote)
+        const data = dataList.filter((value)=> value.id === vote)
+        console.log(data[0])
+
+        // 투표 버튼 api 쓰기
     }
 
-    const getVoteData = (vote : any) => {
+    const getVoteData = (vote : number) => {
         setVote(vote)
     }
 
@@ -43,7 +52,7 @@ export default function Part(){
                     return(
                         <VotePartBox
                             key={idx}
-                            num={idx+1}
+                            id={idx}
                             name={data.name}
                             department={data.department}
                             score={data.score}
