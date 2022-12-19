@@ -3,7 +3,6 @@ import useInput from "../src/hooks/useInput";
 import Link from "next/link";
 
 export default function Register(){
-    const userid = useInput('');
     const username = useInput('');
     const password = useInput('');
     const useremail = useInput('');
@@ -25,7 +24,6 @@ export default function Register(){
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(`
-        userid:${userid.value}
         username:${username.value}
         password:${password.value}
         useremail:${useremail.value}
@@ -54,7 +52,6 @@ export default function Register(){
         <div>
             CEOS 운영진 선출 투표 <br/>
             <form onSubmit={handleSubmit}>
-                <input type="text" {...userid} placeholder="아이디"/><br/>
                 <input type="password" {...password} placeholder="비밀번호"/><br/>
                 <input type="password" value={pwdCheck} onChange={handlePwd} placeholder="비밀번호 확인"/><br/>
                 {pwdError && <div>일치하지 않습니다.</div>}
