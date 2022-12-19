@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 // redux test 부분
-import { login, selectUser } from "../../../src/features/user/userSlice";
+import { login, logout, selectUser } from "../../../src/features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 // redux test 부분
 
@@ -19,6 +19,10 @@ export default function Layout({children} : LayoutProps){
     const user = useSelector(selectUser);
     // redux test 부분
 
+    const handleClick = () => {
+        dispatch(logout());
+    }
+
     return (
         <>
             <Link
@@ -28,9 +32,9 @@ export default function Layout({children} : LayoutProps){
             |
             {
                 user.isLogged ?
-                <div>
+                <button onClick={handleClick}>
                     로그아웃
-                </div>
+                </button>
                 :
                     router.pathname === "/" && 
                 <Link
