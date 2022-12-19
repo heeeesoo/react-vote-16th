@@ -27,7 +27,12 @@ export default function Layout({children} : LayoutProps){
             </Link>
             |
             {
-                router.pathname === "/" && 
+                user.isLogged ?
+                <div>
+                    로그아웃
+                </div>
+                :
+                    router.pathname === "/" && 
                 <Link
                 href="/login">
                     로그인
@@ -35,6 +40,7 @@ export default function Layout({children} : LayoutProps){
             }
             |
             이메일 : {user.useremail}
+            <hr/>
             <div className="container">
                 {children}
             </div>

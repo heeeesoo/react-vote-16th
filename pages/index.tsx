@@ -1,17 +1,7 @@
 import Link from "next/link";
 
-// redux test 부분
-import {up, down, selectCount} from '../src/features/counter/counterSlice'
-import { useSelector, useDispatch } from "react-redux";
-// redux test 부분
-
 export default function Home() {
   const names = ['FE', 'BE', 'DEMO'];
-
-  // redux test 부분
-  const dispatch = useDispatch();
-  const count = useSelector(selectCount);
-  // redux test 부분
 
   return (
     <div>
@@ -38,16 +28,6 @@ export default function Home() {
           )
         })
       }
-
-      <hr/>
-      redux test 부분 <br/>
-      {count}
-      <button onClick={()=>{
-        dispatch(up(2))
-      }}> + </button>
-      <button onClick={()=>{
-        dispatch(down(2))
-      }}> - </button>
     </div>
     
   )

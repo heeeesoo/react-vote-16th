@@ -5,11 +5,13 @@ import { AppState } from "../../store";
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
+        isLogged : false,
         useremail : '',
         password : '',
     },
     reducers: {
         login:(state,action) => {
+            state.isLogged = true;
             state.useremail = action.payload.useremail;
             state.password = action.payload.password;
         }
