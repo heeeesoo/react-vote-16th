@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 // redux test 부분
-import {up, down} from '../src/features/counter/counterSlice'
+import {up, down, selectCount} from '../src/features/counter/counterSlice'
 import { useSelector, useDispatch } from "react-redux";
-import { selectCount } from "../src/features/counter/counterSlice";
 // redux test 부분
 
 export default function Home() {

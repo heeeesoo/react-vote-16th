@@ -3,10 +3,21 @@ import React, { useState, useEffect } from "react";
 import useInput from "../src/hooks/useInput";
 import axios from "axios";
 
+// redux test 부분
+import { login, selectUser } from "../src/features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+// redux test 부분
+
+
 export default function Login() {
 
   const userEmail = useInput('');
   const password = useInput('');
+
+  // redux test 부분
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  // redux test 부분
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,6 +30,14 @@ export default function Login() {
       userid:userEmail.value,
       password:password.value
     }
+
+    // redux test
+    const sampleReduxData = {
+      useremail : userEmail.value,
+      password : password.value,
+    }
+    dispatch(login(sampleReduxData))
+
 
     //login post 
 
@@ -39,6 +58,8 @@ export default function Login() {
     console.log(accessToken);
 
     // accessToken을 localStorage, cookie 등에 저장하지 않는다 (XSS 취약점 보완)
+
+
   }
 
   const REST_API_KEY = process.env.NEXT_PUBLIC_API_KEY;
