@@ -1,15 +1,19 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import VotePartBox from "../../src/components/common/VotePartBox";
+import DepartmentBox from "../../src/components/common/DepartmentBox";
+import TeamBox from "../../src/components/common/TeamBox";
 
 export default function Part(){
     const router = useRouter();
     const {Part} = router.query;
 
-    const [vote, setVote] = useState(0);
+    const [vote, setVote] = useState({
+        id: 0,
+        part: "department"
+    });
 
-    // fe, be, demo 리스트 -> fetch로 바꾸기
-    const dataList = [
+    // fe, be 리스트 -> fetch로 바꾸기
+    const dataList_department = [
         {
             "id" : 0,
             "name" : "후보1",
@@ -33,14 +37,40 @@ export default function Part(){
         }
     ]
 
-    const handleClick = () => {
-        const data = dataList.filter((value)=> value.id === vote)
-        console.log(data[0])
+    // demo 리스트 -> fetch로 바꾸기
+    const dataList_team = [
+        {
+            "id" : 0,
+            "name" : "diaMEtes",
+            "score" : 1 
+        },
+        {
+            "id" : 1,
+            "name" : "포겟미낫",
+            "score" : 2
+        },
+        {
+            "id" : 2,
+            "name" : "밥묵자",
+            "score" : 3
+        }
+    ]
 
+    const handleClick = () => {
         // 투표 버튼 api 쓰기
+
+        const {id, part}= vote;
+        if(part === "department"){
+            const data = dataList_department.filter((value)=> value.id === id)
+            console.log(data[0])
+        }else{
+            const data = dataList_team.filter((value)=> value.id === id)
+            console.log(data[0])
+        }
+
     }
 
-    const getVoteData = (vote : number) => {
+    const getVoteData = (vote : {id: number; part: string;}) => {
         setVote(vote)
     }
 
@@ -48,9 +78,22 @@ export default function Part(){
         <div>
             {Part} 투표하기
             {
-                dataList.map((data,idx)=>{
+                Part === 'DEMO' ?
+                dataList_team.map((data,idx)=>{
                     return(
-                        <VotePartBox
+                        <TeamBox
+                            key={idx}
+                            id={idx}
+                            name={data.name}
+                            score={data.score}
+                            getVoteData={getVoteData}
+                        />
+                    )
+                })
+                :
+                dataList_department.map((data,idx)=>{
+                    return(
+                        <DepartmentBox
                             key={idx}
                             id={idx}
                             name={data.name}
