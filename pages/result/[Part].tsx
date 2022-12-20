@@ -25,20 +25,43 @@ export default function Part(){
     ]
 
    return(
-        <div>
-            {Part} 투표 현황
-            {
-                dataList.map((data,idx)=>{
-                    return(
-                        <ResultPartBox
-                            key={idx}
-                            name={data.name}
-                            department={data.department}
-                            score={data.score} 
-                        />
-                    )
-                })
+        <>
+            <div className="container">
+                {Part} 투표 현황
+                {
+                    dataList.map((data,idx)=>{
+                        return(
+                            <ResultPartBox
+                                key={idx}
+                                name={data.name}
+                                department={data.department}
+                                score={data.score} 
+                            />
+                        )
+                    })
+                }
+            </div>
+            <style jsx>{`
+            .container{
+                display: flex;
+                margin: 15px;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
             }
-        </div>
+            .item{
+                margin: 20px;
+                border-radius: 20px;
+                border: none;
+                background-color: #B2B2B2;
+                width: 450px;
+                height: 50px;
+                cursor: pointer;
+            }
+            .item:hover {
+                background: silver;
+            }
+        `}</style>
+    </>
    ) 
 }
