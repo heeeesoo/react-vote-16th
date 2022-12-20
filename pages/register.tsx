@@ -48,7 +48,7 @@ export default function Register() {
     setTeam(Number(e.target.value));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(`
         username:${username.value}
@@ -71,16 +71,17 @@ export default function Register() {
     }
 
     // 회원가입 post 부분
-    // const data = fetchRegister();
-    // console.log(data)
+    const data = await fetchRegister();
+    if(data){
+      router.push('/')
+    }
   };
 
-  async function fetchRegister(){
+  const fetchRegister = async() =>{
     const settings = {
       method: 'POST',
       headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email:username.value,
@@ -99,6 +100,7 @@ export default function Register() {
         return e;
     }  
   }
+
 
   return (
     <div>
