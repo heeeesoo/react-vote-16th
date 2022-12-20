@@ -52,8 +52,8 @@ export default function Layout({children} : LayoutProps){
                     display: flex;
                     justify-content: space-evenly;
                     align-items: center;
-                    background : #CCD6A6;
-                    height: 40px;
+                    background : #B2B2B2;
+                    height: 45px;
                 }
             `}</style>
         </>
