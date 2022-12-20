@@ -73,13 +73,15 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <>
+    <div className="container">
+      <div className="item">
       CEOS 운영진 선출 투표 <br />
       <form onSubmit={handleSubmit}>
         <input type="text" {...userEmail} placeholder="이메일" />
         <br />
         <input type="password" {...password} placeholder="비밀번호" />
-        <br />
+        <br /><br/>
         <button type="submit">로그인</button>
       </form>
       <br />
@@ -88,7 +90,7 @@ export default function Login() {
       ) : (
         <button onClick={() => signOut()}>카카오 로그아웃</button>
       )}
-      <br />
+      <br /><br/>
       <Link
         href={{
           pathname: "/register",
@@ -99,6 +101,37 @@ export default function Login() {
       >
         회원가입
       </Link>
+      </div>
     </div>
+    <style jsx>{`
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 50px;
+    }
+    .item {
+      text-align: center;
+    }
+
+    button {
+      border-radius: 20px;
+      border: none;
+      width: 200px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+      background: #EEEEEE;
+    }
+    input {
+      margin: 5px;
+      border: none;
+      background: #EEEEEE;
+      width: 200px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+    }
+    `}</style>
+    </>
   );
 }
