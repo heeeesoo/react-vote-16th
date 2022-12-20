@@ -78,7 +78,16 @@ export default function Login() {
         <button onClick={() => signOut()}>카카오 로그아웃</button>
       )}
       <br />
-      <Link href="/register">회원가입</Link>
+      <Link
+        href={{
+          pathname: "/register",
+          query: {
+            social: session.status === "authenticated" ? "true" : "false",
+          },
+        }}
+      >
+        회원가입
+      </Link>
     </div>
   );
 }
