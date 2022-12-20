@@ -7,9 +7,9 @@ import { useSession } from "next-auth/react";
 const selectList = ["Frontend", "Backend"];
 const teamList = [
   "Teample",
+  "diaMEtes",
   "Forget Me Not",
   "Pre:folio",
-  "diaMEtes",
   "recipeasy",
 ];
 
@@ -21,8 +21,8 @@ export default function Register() {
   const username = useInput(isSocialSignIn ? session?.user.name : "");
   const useremail = useInput(isSocialSignIn ? session?.user.email : "");
 
-  const [part, setPart] = useState(""); //useInput으로 바꾸기
-  const [team, setTeam] = useState(""); //useInput으로 바꾸기
+  const [part, setPart] = useState<number>(-1) //useInput으로 바꾸기
+  const [team, setTeam] = useState<number>(-1); //useInput으로 바꾸기
   const [password, setPassword] = useState(
     isSocialSignIn ? session?.user.userId : ""
   );
@@ -42,10 +42,10 @@ export default function Register() {
     setRepassword(value);
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPart(e.target.value);
+    setPart(Number(e.target.value))
   };
   const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTeam(e.target.value);
+    setTeam(Number(e.target.value));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,8 +61,8 @@ export default function Register() {
       username.value !== "" &&
       password !== "" &&
       !pwdError &&
-      part !== "" &&
-      team !== "";
+      part !== -1 &&
+      team !== -1;
 
     if (isEnableReg) {
       console.log("제출");
@@ -71,7 +71,35 @@ export default function Register() {
     }
 
     // 회원가입 post 부분
+    // const data = fetchRegister();
+    // console.log(data)
   };
+
+  async function fetchRegister(){
+    const settings = {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email:username.value,
+        password: password,
+        name: username.value,
+        department: part,
+        team: team
+      })
+    };
+
+    try {
+      const fetchResponse = await fetch('http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/register/', settings);
+      const data = await fetchResponse.json();
+      return data;
+    } catch (e) {
+        return e;
+    }  
+  }
+
   return (
     <div>
       CEOS 운영진 선출 투표 <br />
@@ -111,26 +139,26 @@ export default function Register() {
           <input type="text" {...username} placeholder="이름" />
         </div>
         <div>
-          {selectList.map((value) => (
+          {selectList.map((value,idx) => (
             <div key={value}>
               <input
                 type="radio"
                 onChange={handleSelectChange}
-                value={value}
-                checked={part === value}
+                value={idx}
+                checked={part === idx}
               />
               {value}
             </div>
           ))}
         </div>
         <div>
-          {teamList.map((value) => (
+          {teamList.map((value,idx) => (
             <div key={value}>
               <input
                 type="radio"
                 onChange={handleTeamChange}
-                value={value}
-                checked={team === value}
+                value={idx}
+                checked={team === idx}
               />
               {value}
             </div>
