@@ -4,6 +4,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
+const selectList = ["Frontend", "Backend"];
+const teamList = [
+  "Teample",
+  "Forget Me Not",
+  "Pre:folio",
+  "diaMEtes",
+  "recipeasy",
+];
+
 export default function Register() {
   const router = useRouter();
   const isSocialSignIn: boolean = router.query.social == "true";
@@ -13,8 +22,8 @@ export default function Register() {
   const password = useInput(isSocialSignIn ? session?.user.userId : "");
   const useremail = useInput(isSocialSignIn ? session?.user.email : "");
 
-  const [userDepartment, setDepartmentType] = useState(""); //useInput으로 바꾸기
-  const [teamtype, setTeamType] = useState(""); //useInput으로 바꾸기
+  const [part, setPart] = useState(""); //useInput으로 바꾸기
+  const [team, setTeam] = useState(""); //useInput으로 바꾸기
   const [pwdCheck, setPwdCheck] = useState("");
   const [pwdError, setPwdError] = useState(false);
 
@@ -23,15 +32,12 @@ export default function Register() {
     setPwdError(password.value !== value);
     setPwdCheck(value);
   };
-
-  const selectList = ["Frontend", "Backend"];
-  const teamList = [
-    "Teample",
-    "Forget Me Not",
-    "Pre:folio",
-    "diaMEtes",
-    "recipeasy",
-  ];
+  const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPart(e.target.value);
+  };
+  const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTeam(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,26 +45,24 @@ export default function Register() {
         username:${username.value}
         password:${password.value}
         useremail:${useremail.value}
-        userDepartment:${userDepartment}
-        teamtype:${teamtype}`);
+        userPart:${part}
+        team:${team}`);
 
-    if (!pwdError) {
+    const isEnableReg =
+      username.value !== "" &&
+      password.value !== "" &&
+      !pwdError &&
+      part !== "" &&
+      team !== "";
+
+    if (isEnableReg) {
       console.log("제출");
     } else {
-      console.log("비밀번호 일치X");
+      alert("모든 필드를 채워주세요");
     }
 
     // 회원가입 post 부분
   };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDepartmentType(e.target.value);
-  };
-
-  const handleTeamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTeamType(e.target.value);
-  };
-
   return (
     <div>
       CEOS 운영진 선출 투표 <br />
@@ -66,7 +70,7 @@ export default function Register() {
         {!isSocialSignIn ? (
           <>
             <div>
-              이메일:{" "}
+              이메일:
               <input type="text" {...useremail} placeholder="ceos@gmail.com" />
             </div>
             <div>
@@ -105,7 +109,7 @@ export default function Register() {
                 type="radio"
                 onChange={handleSelectChange}
                 value={value}
-                checked={userDepartment === value}
+                checked={part === value}
               />
               {value}
             </div>
@@ -118,7 +122,7 @@ export default function Register() {
                 type="radio"
                 onChange={handleTeamChange}
                 value={value}
-                checked={teamtype === value}
+                checked={team === value}
               />
               {value}
             </div>
