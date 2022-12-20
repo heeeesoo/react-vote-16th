@@ -131,3 +131,8 @@ export default function Part(){
         </div>
     )
 }
+
+// get 부분
+// export const getServerSideProps = async() => {
+
+// }

@@ -1,7 +1,15 @@
 import Link from "next/link";
+import { selectUser } from "../src/features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
   const names = ['FE', 'BE', 'DEMO'];
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  console.log(user.department)
+  // FE -> 0 BE -> 1
 
   return (
     <div>
@@ -46,6 +54,9 @@ export default function Home() {
             background: #B2B2B2;
             line-height: 150px;
             text-align: center;
+          }
+          .test {
+            pointer-events: none;
           }
       `}</style>
     </div>
