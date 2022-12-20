@@ -19,18 +19,27 @@ export default function Register() {
   const { data: session } = useSession();
 
   const username = useInput(isSocialSignIn ? session?.user.name : "");
-  const password = useInput(isSocialSignIn ? session?.user.userId : "");
   const useremail = useInput(isSocialSignIn ? session?.user.email : "");
 
   const [part, setPart] = useState(""); //useInput으로 바꾸기
   const [team, setTeam] = useState(""); //useInput으로 바꾸기
-  const [pwdCheck, setPwdCheck] = useState("");
+  const [password, setPassword] = useState(
+    isSocialSignIn ? session?.user.userId : ""
+  );
+  const [repassword, setRepassword] = useState(
+    isSocialSignIn ? session?.user.userId : ""
+  );
   const [pwdError, setPwdError] = useState(false);
 
   const handlePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = { ...e.target };
-    setPwdError(password.value !== value);
-    setPwdCheck(value);
+    const value = e.target.value;
+    setPwdError(repassword !== value);
+    setPassword(value);
+  };
+  const handleRepwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPwdError(password !== value);
+    setRepassword(value);
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPart(e.target.value);
@@ -43,14 +52,14 @@ export default function Register() {
     e.preventDefault();
     console.log(`
         username:${username.value}
-        password:${password.value}
+        password:${password}
         useremail:${useremail.value}
         userPart:${part}
         team:${team}`);
 
     const isEnableReg =
       username.value !== "" &&
-      password.value !== "" &&
+      password !== "" &&
       !pwdError &&
       part !== "" &&
       team !== "";
@@ -58,7 +67,7 @@ export default function Register() {
     if (isEnableReg) {
       console.log("제출");
     } else {
-      alert("모든 필드를 채워주세요");
+      alert("조건을 확인해주세요");
     }
 
     // 회원가입 post 부분
@@ -77,7 +86,7 @@ export default function Register() {
               비밀번호:
               <input
                 type="password"
-                {...password}
+                onChange={handlePwd}
                 placeholder="비밀번호를 입력해 주세요"
               />
             </div>
@@ -85,8 +94,7 @@ export default function Register() {
               비밀번호 확인 :
               <input
                 type="password"
-                value={pwdCheck}
-                onChange={handlePwd}
+                onChange={handleRepwd}
                 placeholder="비밀번호를 한번 더 입력해주세요"
               />
               {pwdError && <span>일치하지 않습니다.</span>}
