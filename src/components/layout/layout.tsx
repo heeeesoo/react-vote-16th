@@ -30,7 +30,7 @@ export default function Layout({children} : LayoutProps){
                 href="/">
                     CEOS 16기 투표
                 </Link>
-                이메일 : {user.useremail}
+                {user.name}
                 {
                     user.isLogged ?
                     <button onClick={handleClick}>

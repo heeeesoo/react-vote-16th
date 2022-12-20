@@ -8,17 +8,27 @@ const userSlice = createSlice({
         isLogged : false,
         useremail : '',
         password : '',
+        department: -1,
+        team: -1,
+        name: ''
     },
     reducers: {
         login:(state,action) => {
             state.isLogged = true;
             state.useremail = action.payload.useremail;
             state.password = action.payload.password;
+            state.department = action.payload.department;
+            state.team = action.payload.team;
+            state.name = action.payload.name;
+            
         },
         logout:(state)=>{
             state.isLogged = false;
             state.useremail = '';
             state.password = '';
+            state.department = -1;
+            state.team = -1;
+            state.name = '';
         }
     }
 })

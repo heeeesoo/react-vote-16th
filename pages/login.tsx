@@ -38,9 +38,12 @@ export default function Login() {
       const sampleReduxData = {
         useremail: userEmail.value,
         password: password.value,
+        department: data.department,
+        team: data.team,
+        name: data.name,
       };
       dispatch(login(sampleReduxData));
-      
+
       router.push('/')
     }
 
