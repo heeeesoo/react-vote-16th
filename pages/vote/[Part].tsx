@@ -76,7 +76,8 @@ export default function Part(){
 
     return(
         <div>
-            {Part} 투표하기
+            <div className="container">
+            {Part} 투표하기<br/><br/>
             {
                 Part === 'DEMO' ?
                 dataList_team.map((data,idx)=>{
@@ -104,7 +105,29 @@ export default function Part(){
                     )
                 })
             }
-            <button onClick={handleClick}>투표하기</button>
+            <button className="item" onClick={handleClick}>투표하기</button>
+            </div>
+            <style jsx>{`
+                .container{
+                    display: flex;
+                    margin: 15px;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+                .item{
+                    margin: 20px;
+                    border-radius: 20px;
+                    border: none;
+                    background-color: #B2B2B2;
+                    width: 450px;
+                    height: 50px;
+                    cursor: pointer;
+                }
+                .item:hover {
+                    background: silver;
+                }
+            `}</style>
         </div>
     )
 }

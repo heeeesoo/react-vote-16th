@@ -42,7 +42,7 @@ export default function Home() {
             border-radius: 20px;
             margin: 5px;
             height: 150px;
-            width: 150px;
+            width: 250px;
             background: #B2B2B2;
             line-height: 150px;
             text-align: center;
