@@ -1,16 +1,16 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import useInput from "../src/hooks/useInput";
-import axios from "axios";
 
 // redux test 부분
 import { login, selectUser } from "../src/features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 // redux test 부분
 
 export default function Login() {
+  const router = useRouter();
   const session = useSession();
 
   const userEmail = useInput("");
@@ -28,38 +28,46 @@ export default function Login() {
     password: ${password.value}
     `);
 
-    const data = {
-      userid: userEmail.value,
-      password: password.value,
-    };
-
-    // redux test
-    const sampleReduxData = {
-      useremail: userEmail.value,
-      password: password.value,
-    };
-    dispatch(login(sampleReduxData));
-
     //login post
+    const data = await fetchLogin();
 
-    // const response =  await (await fetch('/api/test/login',{
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify(data)
-    // })).json();
+    if(data.non_field_errors){
+      alert('error')
+    }else if(data){
 
-    const response = await axios.post("/api/test/login", data);
+      const sampleReduxData = {
+        useremail: userEmail.value,
+        password: password.value,
+      };
+      dispatch(login(sampleReduxData));
+      
+      router.push('/')
+    }
 
-    const accessToken = response.data.token;
 
-    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-    console.log(accessToken);
-
-    // accessToken을 localStorage, cookie 등에 저장하지 않는다 (XSS 취약점 보완)
   };
+
+  const fetchLogin = async() => {
+    const settings = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail.value,
+        password: password.value
+      })
+    }
+
+    try {
+      const URL = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/login/';
+      const response = await fetch(URL,settings);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
 
   return (
     <div>

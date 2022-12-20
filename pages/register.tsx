@@ -72,8 +72,13 @@ export default function Register() {
 
     // 회원가입 post 부분
     const data = await fetchRegister();
+    console.log(data)
+    console.log(data.status)
     if(data){
       router.push('/')
+    }else{
+      // error 부분 알람 뜨게
+      alert('error')
     }
   };
 
@@ -84,7 +89,7 @@ export default function Register() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email:username.value,
+        email:useremail.value,
         password: password,
         name: username.value,
         department: part,
