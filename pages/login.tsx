@@ -118,7 +118,7 @@ export default function Login() {
     button {
       border-radius: 20px;
       border: none;
-      width: 200px;
+      width: 300px;
       height: 50px;
       font-family: LINESeedKR-Bd;
       background: #EEEEEE;
@@ -127,7 +127,7 @@ export default function Login() {
       margin: 5px;
       border: none;
       background: #EEEEEE;
-      width: 200px;
+      width: 300px;
       height: 50px;
       font-family: LINESeedKR-Bd;
     }

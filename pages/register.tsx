@@ -108,46 +108,49 @@ export default function Register() {
 
 
   return (
-    <div>
-      CEOS 운영진 선출 투표 <br />
+    <>
+    <div className="container">
+      <div className="item">
+      CEOS 운영진 선출 투표 <br /><br/>
       <form onSubmit={handleSubmit}>
         {!isSocialSignIn ? (
           <>
             <div>
-              이메일:
+              이메일<br/>
               <input type="text" {...useremail} placeholder="ceos@gmail.com" />
-            </div>
+            </div><br/>
             <div>
-              비밀번호:
+              비밀번호<br/>
               <input
                 type="password"
                 onChange={handlePwd}
                 placeholder="비밀번호를 입력해 주세요"
               />
-            </div>
+            </div><br/>
             <div>
-              비밀번호 확인 :
+              비밀번호 확인<br/>
               <input
                 type="password"
                 onChange={handleRepwd}
                 placeholder="비밀번호를 한번 더 입력해주세요"
               />
+              <br/>
               {pwdError && <span>일치하지 않습니다.</span>}
-            </div>
+            </div><br/>
           </>
         ) : (
           <div>
-            이메일:
+            이메일<br/>
             <input type="text" {...useremail} readOnly />
           </div>
         )}
         <div>
-          <span>이름 : </span>
+          <span>이름<br/> </span>
           <input type="text" {...username} placeholder="이름" />
-        </div>
+        </div><br/><hr/>
         <div>
           {selectList.map((value,idx) => (
-            <div key={value}>
+            <div key={value} className="radio">
               <input
                 type="radio"
                 onChange={handleSelectChange}
@@ -158,9 +161,10 @@ export default function Register() {
             </div>
           ))}
         </div>
+        <hr/>
         <div>
           {teamList.map((value,idx) => (
-            <div key={value}>
+            <div className="radio" key={value}>
               <input
                 type="radio"
                 onChange={handleTeamChange}
@@ -170,10 +174,52 @@ export default function Register() {
               {value}
             </div>
           ))}
-        </div>
+        </div><hr/>
         <button type="submit">회원가입</button>
       </form>
+      <br/>
       <Link href="/login">로그인</Link>
+      </div>
     </div>
+    <style jsx>{`
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 50px;
+    }
+    .item {
+      text-align: center;
+    }
+    .radio {
+      diplay: flex;
+      width:300px;
+      text-align: left;
+      line-height: 10px;
+    }
+
+    button {
+      border-radius: 20px;
+      border: none;
+      width: 300px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+      background: #EEEEEE;
+    }
+    input {
+      margin: 5px;
+      border: none;
+      background: #EEEEEE;
+      width: 300px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+    }
+    input[type='radio']{
+      width: 20px;
+      height: 20px;
+    }
+    `}</style>
+    </>
   );
 }
