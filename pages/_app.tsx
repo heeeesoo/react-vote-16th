@@ -1,4 +1,6 @@
 import "../styles/globals.css";
+import "@picocss/pico";
+
 import type { AppProps } from "next/app";
 import Script from "next/script";
 import Layout from "../src/components/layout/layout";
