@@ -22,17 +22,18 @@ export default function Layout({children} : LayoutProps){
     let department = '';
 
     if(user.department===0){
-        department='| FE'
+        department='[FE]'
     }else if(user.department===1){
-        department='| BE'
+        department='[BE]'
     }
 
     const handleClick = async () => {
-        const URL = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/logout/'
+        const URL = 'https://ceos-16-vote.ml/account/logout/'
         const data = await fetch(URL)
         if(data.status === 200){
             console.log(data.status)
             dispatch(logout());
+            router.push('/')
         }
     }
 

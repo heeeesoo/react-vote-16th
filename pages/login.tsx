@@ -55,6 +55,7 @@ export default function Login() {
   const fetchLogin = async() => {
     const settings = {
       method: 'POST',
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,8 +66,20 @@ export default function Login() {
     }
 
     try {
-      const URL = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/login/';
-      const response = await fetch(URL,settings);
+      const URL = 'https://ceos-16-vote.ml/account/login/';
+      // const response = await fetch(URL,settings);
+      const response = await fetch(URL,{
+        method: 'POST',
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail.value,
+          password: password.value
+        })
+      })
       const status = response.status;
       const data = await response.json();
       console.log('FFF:',status)

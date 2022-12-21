@@ -24,6 +24,7 @@ export default function Part({
     });
 
     console.log(dataDepartment)
+    console.log('DATATEAM:',dataTeam);
 
     // fe, be 리스트 -> fetch로 바꾸기
     const dataList_department = dataDepartment.filter((value:any)=>{
@@ -39,10 +40,18 @@ export default function Part({
             console.log(data[0])
             const response = await fetchVote(data[0],part);
             console.log(response)
+            if(response === 'success'){
+                router.push(`/result/${Part}`)
+            }
             
         }else{
             const data = dataTeam.filter((value:any)=> value.id === id)
             console.log(data[0])
+            const response = await fetchVote(data[0],part);
+            console.log(response)
+            if(response === 'success'){
+                router.push(`/result/${Part}`)
+            }
         }
 
     }
@@ -52,13 +61,15 @@ export default function Part({
     }
 
     const fetchVote = async (data:any,part:string) => {
-        const name = data.id
-        const department = data.department_id
-        const team = part === 'department' ? null : data.team_id
+        console.log('!!!:',data)
+        const name = part === 'department' ? data.id : null
+        const department = part === 'department' ? data.department_id : null
+        const team = part === 'department' ? null : data.id
         console.log('F:',name,department,team)
         console.log(typeof(name),typeof(department))
         const settings ={
             method: 'POST',
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -70,8 +81,20 @@ export default function Part({
         }
 
         try {
-            const URL = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/users/vote/';
-            const data = await (await fetch(URL,settings)).json();
+            const URL = 'https://ceos-16-vote.ml/users/vote/';
+            const data = await (await fetch(URL,{
+                method: 'POST',
+                credentials: 'include',
+                mode: 'cors',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                department: department,
+                team: team
+            })
+            })).json();
             return data;
         } catch (error) {
             return error;
@@ -127,6 +150,8 @@ export default function Part({
                     width: 450px;
                     height: 50px;
                     cursor: pointer;
+                    font-family: LINESeedKR-Bd;
+                    font-size: 15px;
                 }
                 .item:hover {
                     background: silver;
@@ -138,8 +163,8 @@ export default function Part({
 
 // get 부분
 export const getServerSideProps : GetServerSideProps = async() => {
-    const URL_department = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/users/department/0';
-    const URL_team = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/users/team/0';
+    const URL_department = 'https://ceos-16-vote.ml/users/department/0';
+    const URL_team = 'https://ceos-16-vote.ml/users/team/0';
     const dataDepartment = await (await fetch(URL_department)).json();
     const dataTeam = await (await fetch(URL_team)).json();
 

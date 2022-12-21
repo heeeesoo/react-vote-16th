@@ -18,8 +18,11 @@ export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
         <>
         <div className="container">
             <button className="item" onClick={handleClick}>
-                {name} <br/>
-                {score} <br/>
+                <div className="name">
+                    {name} <br/>
+                </div>
+                <br/>
+                실시간 득표수 {score} <br/>
             </button>
         </div>
         <style jsx>{`
@@ -33,9 +36,14 @@ export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
             width: 450px;
             height: 100px;
             cursor: pointer;
+            font-family: LINESeedKR-Bd;
         }
         .item:hover {
             background: silver;
+        }
+
+        .name {
+            font-size: 25px;
         }
         `}</style>
         </>
