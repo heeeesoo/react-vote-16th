@@ -31,6 +31,17 @@ export default function Register() {
   );
   const [pwdError, setPwdError] = useState(false);
 
+  // //오류메시지 상태 저장
+  // const [emailMessage, setEmailMessage] = useState<string>('');
+  // const [passwordMessage, setPasswordMessage] = useState<string>('');
+  // const [nameMessage, setNameMessage] = useState<string>('');
+
+  // //유효성 검사
+  // const [isEmail, setIsEmail] = useState<boolean>(false)
+  // const [isPassword, setIsPassword] = useState<boolean>(false)
+  // const [isName, setIsName] = useState<boolean>(false)
+  
+
   const handlePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPwdError(repassword !== value);
@@ -66,20 +77,13 @@ export default function Register() {
 
     if (isEnableReg) {
       console.log("제출");
+      const data = await fetchRegister();
+      // console.log(data.ok)
+      router.push('/')
     } else {
       alert("조건을 확인해주세요");
     }
 
-    // 회원가입 post 부분
-    const data = await fetchRegister();
-    console.log(data)
-    console.log(data.status)
-    if(data){
-      router.push('/')
-    }else{
-      // error 부분 알람 뜨게
-      alert('error')
-    }
   };
 
   const fetchRegister = async() =>{
@@ -206,6 +210,7 @@ export default function Register() {
       height: 50px;
       font-family: LINESeedKR-Bd;
       background: #EEEEEE;
+      cursor: pointer;
     }
     input {
       margin: 5px;
@@ -218,6 +223,7 @@ export default function Register() {
     input[type='radio']{
       width: 20px;
       height: 20px;
+      cursor: pointer;
     }
     `}</style>
     </>

@@ -17,7 +17,7 @@ export default function Home() {
         names.map((name,idx)=>{
           return (
             <div className="container" key={name}>
-              <div className="item">
+              <div className = {user.department>=0 && (user.department===idx || idx===2) ? 'item' : 'itemX'}>
                 <Link
                   href={{
                     pathname: `/vote/${name}`
@@ -26,7 +26,7 @@ export default function Home() {
                   {name} 투표하기
                 </Link>
               </div>
-              <div className="item">
+              <div className = {user.department>=0 && (user.department===idx || idx===2) ? 'item' : 'itemX'}>
                 <Link
                   href={{
                     pathname: `/result/${name}`
@@ -51,11 +51,18 @@ export default function Home() {
             margin: 5px;
             height: 150px;
             width: 250px;
-            background: #B2B2B2;
+            background: #EEEEEE;
             line-height: 150px;
             text-align: center;
           }
-          .test {
+          .itemX {
+            border-radius: 20px;
+            margin: 5px;
+            height: 150px;
+            width: 250px;
+            background: #434242;
+            line-height: 150px;
+            text-align: center;
             pointer-events: none;
           }
       `}</style>

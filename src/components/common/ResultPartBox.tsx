@@ -19,7 +19,7 @@ export default function ResultPartBox({name,department,score}:ResultPartBoxProps
             .item{
                 margin: 5px;
                 border-radius: 20px;
-                background-color: #B2B2B2;
+                background-color: #EEEEEE;
                 width: 450px;
                 height: 100px;
                 line-height: 35px;

@@ -15,11 +15,29 @@ export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
     }
 
     return (
-        <div>
-            <button onClick={handleClick}>
+        <>
+        <div className="container">
+            <button className="item" onClick={handleClick}>
                 {name} <br/>
                 {score} <br/>
             </button>
         </div>
+        <style jsx>{`
+        .container{
+            margin: 5px;
+        }
+        .item{
+            border-radius: 20px;
+            border: none;
+            background-color: #EEEEEE;
+            width: 450px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .item:hover {
+            background: silver;
+        }
+        `}</style>
+        </>
     )
 }

@@ -19,8 +19,21 @@ export default function Layout({children} : LayoutProps){
     const user = useSelector(selectUser);
     // redux test 부분
 
-    const handleClick = () => {
-        dispatch(logout());
+    let department = '';
+
+    if(user.department===0){
+        department='| FE'
+    }else if(user.department===1){
+        department='| BE'
+    }
+
+    const handleClick = async () => {
+        const URL = 'http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/logout/'
+        const data = await fetch(URL)
+        if(data.status === 200){
+            console.log(data.status)
+            dispatch(logout());
+        }
     }
 
     return (
@@ -30,7 +43,7 @@ export default function Layout({children} : LayoutProps){
                 href="/">
                     CEOS 16기 투표
                 </Link>
-                {user.name}
+                {user.name} {department}
                 {
                     user.isLogged ?
                     <button onClick={handleClick}>
@@ -54,6 +67,13 @@ export default function Layout({children} : LayoutProps){
                     align-items: center;
                     background : #B2B2B2;
                     height: 45px;
+                }
+
+                button {
+                    font-family: LINESeedKR-Bd;
+                    border:none;
+                    background : none;
+                    cursor: pointer;
                 }
             `}</style>
         </>
