@@ -1,3 +1,6 @@
+import { login, selectUser } from "../../../src/features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 interface TeamBoxProps {
     id : number;
     name : string;
@@ -6,6 +9,9 @@ interface TeamBoxProps {
 }
 
 export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
+
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
 
     const handleClick = () => {
         getVoteData({
@@ -17,7 +23,7 @@ export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
     return (
         <>
         <div className="container">
-            <button className="item" onClick={handleClick}>
+            <button className= {user.team === id ? "itemX" : "item"} onClick={handleClick}>
                 <div className="name">
                     {name} <br/>
                 </div>
@@ -40,6 +46,16 @@ export default function TeamBox({id,name,score,getVoteData}:TeamBoxProps){
         }
         .item:hover {
             background: silver;
+        }
+
+        .itemX {
+            border-radius: 20px;
+            border: none;
+            background-color: #434242;
+            width: 450px;
+            height: 100px;
+            pointer-events: none;
+            font-family: LINESeedKR-Bd;
         }
 
         .name {

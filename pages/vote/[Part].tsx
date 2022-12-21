@@ -23,9 +23,6 @@ export default function Part({
         part: "department"
     });
 
-    console.log(dataDepartment)
-    console.log('DATATEAM:',dataTeam);
-
     // fe, be 리스트 -> fetch로 바꾸기
     const dataList_department = dataDepartment.filter((value:any)=>{
         return value.department_id === department_id
@@ -37,18 +34,14 @@ export default function Part({
         const {id, part}= vote;
         if(part === "department"){
             const data = dataDepartment.filter((value:any)=> value.id === id)
-            console.log(data[0])
             const response = await fetchVote(data[0],part);
-            console.log(response)
             if(response === 'success'){
                 router.push(`/result/${Part}`)
             }
             
         }else{
             const data = dataTeam.filter((value:any)=> value.id === id)
-            console.log(data[0])
             const response = await fetchVote(data[0],part);
-            console.log(response)
             if(response === 'success'){
                 router.push(`/result/${Part}`)
             }
@@ -61,24 +54,9 @@ export default function Part({
     }
 
     const fetchVote = async (data:any,part:string) => {
-        console.log('!!!:',data)
         const name = part === 'department' ? data.id : null
         const department = part === 'department' ? data.department_id : null
         const team = part === 'department' ? null : data.id
-        console.log('F:',name,department,team)
-        console.log(typeof(name),typeof(department))
-        const settings ={
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: name,
-                department: department,
-                team: team
-            })
-        }
 
         try {
             const URL = 'https://ceos-16-vote.ml/users/vote/';

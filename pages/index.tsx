@@ -8,9 +8,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  console.log(user.department)
-  // FE -> 0 BE -> 1
-
   return (
     <div>
       {

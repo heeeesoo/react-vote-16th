@@ -31,7 +31,6 @@ export default function Layout({children} : LayoutProps){
         const URL = 'https://ceos-16-vote.ml/account/logout/'
         const data = await fetch(URL)
         if(data.status === 200){
-            console.log(data.status)
             dispatch(logout());
             router.push('/')
         }

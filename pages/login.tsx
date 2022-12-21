@@ -23,15 +23,9 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`
-    userEmail : ${userEmail.value}
-    password: ${password.value}
-    `);
 
     //login post
     const data = await fetchLogin();
-
-    // console.log('HHH:',status)
 
     if(data.non_field_errors){
       alert('error')
@@ -82,7 +76,6 @@ export default function Login() {
       })
       const status = response.status;
       const data = await response.json();
-      console.log('FFF:',status)
       return data;
     } catch (error) {
       return error;

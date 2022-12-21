@@ -61,12 +61,6 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`
-        username:${username.value}
-        password:${password}
-        useremail:${useremail.value}
-        userPart:${part}
-        team:${team}`);
 
     const isEnableReg =
       username.value !== "" &&
@@ -76,9 +70,7 @@ export default function Register() {
       team !== -1;
 
     if (isEnableReg) {
-      console.log("제출");
       const data = await fetchRegister();
-      // console.log(data.ok)
       router.push('/')
     } else {
       alert("조건을 확인해주세요");
