@@ -1,16 +1,16 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import useInput from "../src/hooks/useInput";
-import axios from "axios";
 
 // redux test 부분
 import { login, selectUser } from "../src/features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 // redux test 부분
 
 export default function Login() {
+  const router = useRouter();
   const session = useSession();
 
   const userEmail = useInput("");
@@ -23,52 +23,75 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`
-    userEmail : ${userEmail.value}
-    password: ${password.value}
-    `);
-
-    const data = {
-      userid: userEmail.value,
-      password: password.value,
-    };
-
-    // redux test
-    const sampleReduxData = {
-      useremail: userEmail.value,
-      password: password.value,
-    };
-    dispatch(login(sampleReduxData));
 
     //login post
+    const data = await fetchLogin();
 
-    // const response =  await (await fetch('/api/test/login',{
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify(data)
-    // })).json();
+    if(data.non_field_errors){
+      alert('error')
+    }else if(data){
 
-    const response = await axios.post("/api/test/login", data);
+      const sampleReduxData = {
+        useremail: userEmail.value,
+        password: password.value,
+        department: data.department,
+        team: data.team,
+        name: data.name,
+      };
+      dispatch(login(sampleReduxData));
 
-    const accessToken = response.data.token;
+      router.push('/')
+    }
 
-    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-    console.log(accessToken);
 
-    // accessToken을 localStorage, cookie 등에 저장하지 않는다 (XSS 취약점 보완)
   };
 
+  const fetchLogin = async() => {
+    const settings = {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail.value,
+        password: password.value
+      })
+    }
+
+    try {
+      const URL = 'https://ceos-16-vote.ml/account/login/';
+      // const response = await fetch(URL,settings);
+      const response = await fetch(URL,{
+        method: 'POST',
+        credentials: 'include',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail.value,
+          password: password.value
+        })
+      })
+      const status = response.status;
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
   return (
-    <div>
+    <>
+    <div className="container">
+      <div className="item">
       CEOS 운영진 선출 투표 <br />
       <form onSubmit={handleSubmit}>
         <input type="text" {...userEmail} placeholder="이메일" />
         <br />
         <input type="password" {...password} placeholder="비밀번호" />
-        <br />
+        <br /><br/>
         <button type="submit">로그인</button>
       </form>
       <br />
@@ -77,7 +100,7 @@ export default function Login() {
       ) : (
         <button onClick={() => signOut()}>카카오 로그아웃</button>
       )}
-      <br />
+      <br /><br/>
       <Link
         href={{
           pathname: "/register",
@@ -88,6 +111,37 @@ export default function Login() {
       >
         회원가입
       </Link>
+      </div>
     </div>
+    <style jsx>{`
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 50px;
+    }
+    .item {
+      text-align: center;
+    }
+
+    button {
+      border-radius: 20px;
+      border: none;
+      width: 300px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+      background: #EEEEEE;
+    }
+    input {
+      margin: 5px;
+      border: none;
+      background: #EEEEEE;
+      width: 300px;
+      height: 50px;
+      font-family: LINESeedKR-Bd;
+    }
+    `}</style>
+    </>
   );
 }
