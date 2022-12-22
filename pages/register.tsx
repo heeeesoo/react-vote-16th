@@ -94,7 +94,7 @@ export default function Register() {
     };
 
     try {
-      const fetchResponse = await fetch('http://ec2-3-37-33-162.ap-northeast-2.compute.amazonaws.com/account/register/', settings);
+      const fetchResponse = await fetch('https://ceos-16-vote.ml/account/register/', settings);
       const data = await fetchResponse.json();
       return data;
     } catch (e) {
